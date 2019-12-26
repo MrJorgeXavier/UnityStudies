@@ -59,9 +59,17 @@ public class @InputManager : IInputActionCollection, IDisposable
                     ""interactions"": """"
                 },
                 {
-                    ""name"": ""Move"",
+                    ""name"": ""Delta"",
                     ""type"": ""Button"",
                     ""id"": ""bc3acd10-0e90-4170-81b1-1a1c52369827"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""Position"",
+                    ""type"": ""Button"",
+                    ""id"": ""1b5587d4-2b6d-46d3-8480-4597362cec69"",
                     ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """"
@@ -82,8 +90,8 @@ public class @InputManager : IInputActionCollection, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""7d68d076-a6bd-4c98-94c6-c6f8f9dc6b24"",
-                    ""path"": ""<Mouse>/clickCount"",
-                    ""interactions"": """",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": ""MultiTap"",
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Focus"",
@@ -93,7 +101,7 @@ public class @InputManager : IInputActionCollection, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""95cb083b-5f2a-4741-b6a4-68ab95ed5f89"",
-                    ""path"": ""<Mouse>/middleButton"",
+                    ""path"": ""<Mouse>/leftButton"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -104,7 +112,7 @@ public class @InputManager : IInputActionCollection, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""fdb8d9f3-d60f-430e-b813-bd9157944c1d"",
-                    ""path"": ""<Mouse>/rightButton"",
+                    ""path"": ""<Mouse>/middleButton"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -115,7 +123,7 @@ public class @InputManager : IInputActionCollection, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""90475818-b3cb-4970-b4b4-4f6eafb40fea"",
-                    ""path"": ""<Mouse>/leftButton"",
+                    ""path"": ""<Mouse>/rightButton"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -130,7 +138,18 @@ public class @InputManager : IInputActionCollection, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Move"",
+                    ""action"": ""Delta"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""609c98c9-a4b1-4144-afb2-212cc6dfaa98"",
+                    ""path"": ""<Mouse>/position"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Position"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -146,7 +165,8 @@ public class @InputManager : IInputActionCollection, IDisposable
         m_Camera_SideMovement = m_Camera.FindAction("SideMovement", throwIfNotFound: true);
         m_Camera_Look = m_Camera.FindAction("Look", throwIfNotFound: true);
         m_Camera_Orbit = m_Camera.FindAction("Orbit", throwIfNotFound: true);
-        m_Camera_Move = m_Camera.FindAction("Move", throwIfNotFound: true);
+        m_Camera_Delta = m_Camera.FindAction("Delta", throwIfNotFound: true);
+        m_Camera_Position = m_Camera.FindAction("Position", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -201,7 +221,8 @@ public class @InputManager : IInputActionCollection, IDisposable
     private readonly InputAction m_Camera_SideMovement;
     private readonly InputAction m_Camera_Look;
     private readonly InputAction m_Camera_Orbit;
-    private readonly InputAction m_Camera_Move;
+    private readonly InputAction m_Camera_Delta;
+    private readonly InputAction m_Camera_Position;
     public struct CameraActions
     {
         private @InputManager m_Wrapper;
@@ -211,7 +232,8 @@ public class @InputManager : IInputActionCollection, IDisposable
         public InputAction @SideMovement => m_Wrapper.m_Camera_SideMovement;
         public InputAction @Look => m_Wrapper.m_Camera_Look;
         public InputAction @Orbit => m_Wrapper.m_Camera_Orbit;
-        public InputAction @Move => m_Wrapper.m_Camera_Move;
+        public InputAction @Delta => m_Wrapper.m_Camera_Delta;
+        public InputAction @Position => m_Wrapper.m_Camera_Position;
         public InputActionMap Get() { return m_Wrapper.m_Camera; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -236,9 +258,12 @@ public class @InputManager : IInputActionCollection, IDisposable
                 @Orbit.started -= m_Wrapper.m_CameraActionsCallbackInterface.OnOrbit;
                 @Orbit.performed -= m_Wrapper.m_CameraActionsCallbackInterface.OnOrbit;
                 @Orbit.canceled -= m_Wrapper.m_CameraActionsCallbackInterface.OnOrbit;
-                @Move.started -= m_Wrapper.m_CameraActionsCallbackInterface.OnMove;
-                @Move.performed -= m_Wrapper.m_CameraActionsCallbackInterface.OnMove;
-                @Move.canceled -= m_Wrapper.m_CameraActionsCallbackInterface.OnMove;
+                @Delta.started -= m_Wrapper.m_CameraActionsCallbackInterface.OnDelta;
+                @Delta.performed -= m_Wrapper.m_CameraActionsCallbackInterface.OnDelta;
+                @Delta.canceled -= m_Wrapper.m_CameraActionsCallbackInterface.OnDelta;
+                @Position.started -= m_Wrapper.m_CameraActionsCallbackInterface.OnPosition;
+                @Position.performed -= m_Wrapper.m_CameraActionsCallbackInterface.OnPosition;
+                @Position.canceled -= m_Wrapper.m_CameraActionsCallbackInterface.OnPosition;
             }
             m_Wrapper.m_CameraActionsCallbackInterface = instance;
             if (instance != null)
@@ -258,9 +283,12 @@ public class @InputManager : IInputActionCollection, IDisposable
                 @Orbit.started += instance.OnOrbit;
                 @Orbit.performed += instance.OnOrbit;
                 @Orbit.canceled += instance.OnOrbit;
-                @Move.started += instance.OnMove;
-                @Move.performed += instance.OnMove;
-                @Move.canceled += instance.OnMove;
+                @Delta.started += instance.OnDelta;
+                @Delta.performed += instance.OnDelta;
+                @Delta.canceled += instance.OnDelta;
+                @Position.started += instance.OnPosition;
+                @Position.performed += instance.OnPosition;
+                @Position.canceled += instance.OnPosition;
             }
         }
     }
@@ -272,6 +300,7 @@ public class @InputManager : IInputActionCollection, IDisposable
         void OnSideMovement(InputAction.CallbackContext context);
         void OnLook(InputAction.CallbackContext context);
         void OnOrbit(InputAction.CallbackContext context);
-        void OnMove(InputAction.CallbackContext context);
+        void OnDelta(InputAction.CallbackContext context);
+        void OnPosition(InputAction.CallbackContext context);
     }
 }

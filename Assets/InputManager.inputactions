@@ -46,9 +46,17 @@
                     "interactions": ""
                 },
                 {
-                    "name": "Move",
+                    "name": "Delta",
                     "type": "Button",
                     "id": "bc3acd10-0e90-4170-81b1-1a1c52369827",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "Position",
+                    "type": "Button",
+                    "id": "1b5587d4-2b6d-46d3-8480-4597362cec69",
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": ""
@@ -69,8 +77,8 @@
                 {
                     "name": "",
                     "id": "7d68d076-a6bd-4c98-94c6-c6f8f9dc6b24",
-                    "path": "<Mouse>/clickCount",
-                    "interactions": "",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "MultiTap",
                     "processors": "",
                     "groups": "",
                     "action": "Focus",
@@ -80,7 +88,7 @@
                 {
                     "name": "",
                     "id": "95cb083b-5f2a-4741-b6a4-68ab95ed5f89",
-                    "path": "<Mouse>/middleButton",
+                    "path": "<Mouse>/leftButton",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -91,7 +99,7 @@
                 {
                     "name": "",
                     "id": "fdb8d9f3-d60f-430e-b813-bd9157944c1d",
-                    "path": "<Mouse>/rightButton",
+                    "path": "<Mouse>/middleButton",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -102,7 +110,7 @@
                 {
                     "name": "",
                     "id": "90475818-b3cb-4970-b4b4-4f6eafb40fea",
-                    "path": "<Mouse>/leftButton",
+                    "path": "<Mouse>/rightButton",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -117,7 +125,18 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Move",
+                    "action": "Delta",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "609c98c9-a4b1-4144-afb2-212cc6dfaa98",
+                    "path": "<Mouse>/position",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Position",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

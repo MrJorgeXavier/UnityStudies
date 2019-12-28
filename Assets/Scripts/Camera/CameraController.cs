@@ -1,8 +1,8 @@
 using UnityEngine;
 public class CameraController: MonoBehaviour {
-    public Transform cameraTransform;
+    public Vector2 focusOffset = new Vector2(2, 3);
+    public float focusTransitionSpeed = 10f;
     private InputManager input;
-
     private FocusCommand focusCommand;
     private LookCommand lookCommand;
     private OrbitCommand orbitCommand;
@@ -24,7 +24,7 @@ public class CameraController: MonoBehaviour {
         // Debug.Log("isSideMoving: " + sideMovementCommand.IsActive);
         // Debug.Log("isLooking: " + lookCommand.IsActive);
         // Debug.Log("isZooming: " + zoomCommand.IsActive);
-        if(focusCommand.IsActive) performFocus();
+        if(focusCommand.FocusedObject != null) performFocus(focusCommand.FocusedObject);
 
     }
 
@@ -37,24 +37,25 @@ public class CameraController: MonoBehaviour {
         input.Camera.Disable();
     }
 
-    void OnDrawGizmos() {
-        if(input == null || cameraTransform == null) return;
-        Gizmos.color = Color.blue;
-        var target = focusCommand.Position - cameraTransform.position;
-        Gizmos.DrawLine(cameraTransform.position, target);
-        Gizmos.DrawSphere(target, 1f);
+    private void performFocus(Transform target) {
+        float speed = focusTransitionSpeed * Time.fixedDeltaTime;
+        Quaternion oldRotation = transform.rotation;
+        Vector3 refVelocity = Vector3.zero;
+        Vector3 offset = focusOffsetFrom(target);
+        Vector3 newPosition = target.position + offset;
+        Vector3 interpolatedPosition = Vector3.Lerp(transform.position, newPosition, speed);
+        transform.position = interpolatedPosition;
+        transform.LookAt(target);
+        transform.rotation = Quaternion.Lerp(oldRotation, transform.rotation, speed);
     }
 
-    private void performFocus() {
-        Debug.Log("performFocus");
-        if (
-            Physics.Raycast(cameraTransform.position, cameraTransform.position - focusCommand.Position, out RaycastHit hit, float.MaxValue)
-        ) {
-            if(hit.transform != null) {
-                Debug.Log("FOCUS");
-            } else {
-                Debug.Log("Do NOT FOCUS!");
-            }
+    private Vector3 focusOffsetFrom(Transform target) {
+        float xDiference = Mathf.Abs(target.position.x) - Mathf.Abs(transform.position.x);
+        float zDiference = Mathf.Abs(target.position.z) - Mathf.Abs(transform.position.z);
+        if(xDiference > zDiference) {
+            return new Vector3(0, focusOffset.y, focusOffset.x);
+        } else {
+            return new Vector3(focusOffset.x, focusOffset.y, 0);
         }
     }
 }

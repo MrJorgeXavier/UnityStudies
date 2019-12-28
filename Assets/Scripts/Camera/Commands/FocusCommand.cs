@@ -8,14 +8,20 @@ class FocusCommand: ComposedCommand<int, Vector2> {
         }
     }
 
-    public Vector3 Position {
-        get {
-            var input = modifierInput;
-            var pos = Camera.main.ScreenToWorldPoint(new Vector3(input.x, input.y, -1));
-            Debug.Log("Mouse position: " + pos);
-            return pos;
-        }
+    public Transform FocusedObject = null;
+
+    public FocusCommand(InputAction focusAction, InputAction positionModifier): base(focusAction, positionModifier) {
+        focusAction.performed += _ => OnFocusActionPerformed();
     }
 
-    public FocusCommand(InputAction focusAction, InputAction positionModifier): base(focusAction, positionModifier) {}
+    private void OnFocusActionPerformed() {
+        if (
+            Physics.Raycast(Camera.main.ScreenPointToRay(new Vector3(modifierInput.x, modifierInput.y, 0)), out RaycastHit hit)
+            && hit.transform != null
+        ) {
+            FocusedObject = hit.transform;
+        } else {
+            FocusedObject = null;
+        }
+    }
 }

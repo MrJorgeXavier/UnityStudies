@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 
 class FocusCommand: ComposedCommand<int, Vector2> {
-    public override bool IsActive {
+    public override bool Activated {
         get {
             return action.triggered;
         }

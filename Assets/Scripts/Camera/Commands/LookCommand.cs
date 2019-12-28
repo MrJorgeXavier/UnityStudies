@@ -6,5 +6,4 @@ class LookCommand: ComposedCommand<float, Vector2> {
         get {return input != 0 && modifierInput != Vector2.zero;}
     }
     
-    public LookCommand(InputAction lookAction, InputAction deltaAction): base(lookAction, deltaAction) {}
 }

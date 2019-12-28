@@ -8,7 +8,8 @@ abstract class ComposedCommand<T, Modifier>: Command<T>
     protected Modifier modifierInput {
         get { return modifierAction.ReadValue<Modifier>(); }
     }
-    protected ComposedCommand(InputAction action, InputAction modifier): base(action) {
+    public virtual void ConfigureAction(InputAction action, InputAction modifier) {
         this.modifierAction = modifier;
+        ConfigureAction(action);
     }
 }

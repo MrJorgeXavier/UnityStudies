@@ -3,14 +3,14 @@ using UnityEngine.InputSystem;
 
 abstract class Command<T> where T: struct {
     public virtual bool Activated {
-        get { return false; }
+        get { return action.triggered; }
     }
     protected InputAction action;
     protected T input {
         get { return action.ReadValue<T>(); }
     }
 
-    protected Command(InputAction action) {
+    public void ConfigureAction(InputAction action) {
         this.action = action;
     }
 

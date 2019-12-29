@@ -29,8 +29,8 @@ class OrbitCommand: ComposedCommand<float, Vector2> {
 
     public void PerformOrbit(Transform self, Vector3 target, float deltaTime) {
         float speed = Speed * 10 * deltaTime;
-        self.parent.RotateAround(target, Vector3.up, modifierInput.x * speed);
-        self.parent.RotateAround(target, Vector3.right, modifierInput.y * speed);
-        self.LookAt(target);
+        self.parent.Rotate(Vector3.up, modifierInput.x * speed);
+        self.Rotate(Vector3.right, modifierInput.y * -speed);
+        self.parent.position = (target + -self.forward.normalized * Vector3.Distance(self.position, target));
     }
 }

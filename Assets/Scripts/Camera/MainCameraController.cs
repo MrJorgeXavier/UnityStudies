@@ -1,5 +1,5 @@
 using UnityEngine;
-public class CameraController: MonoBehaviour {
+public class MainCameraController: MonoBehaviour {
     
     private InputManager input;
     [SerializeField] FocusCommand focusCommand = new FocusCommand();

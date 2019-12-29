@@ -101,8 +101,8 @@ public class @InputManager : IInputActionCollection, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""95cb083b-5f2a-4741-b6a4-68ab95ed5f89"",
-                    ""path"": ""<Mouse>/leftButton"",
-                    ""interactions"": """",
+                    ""path"": ""<Mouse>/middleButton"",
+                    ""interactions"": ""Press(behavior=2)"",
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""SideMovement"",
@@ -112,7 +112,7 @@ public class @InputManager : IInputActionCollection, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""fdb8d9f3-d60f-430e-b813-bd9157944c1d"",
-                    ""path"": ""<Mouse>/middleButton"",
+                    ""path"": ""<Mouse>/rightButton"",
                     ""interactions"": ""Press(behavior=2)"",
                     ""processors"": """",
                     ""groups"": """",
@@ -123,7 +123,7 @@ public class @InputManager : IInputActionCollection, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""90475818-b3cb-4970-b4b4-4f6eafb40fea"",
-                    ""path"": ""<Mouse>/rightButton"",
+                    ""path"": ""<Mouse>/leftButton"",
                     ""interactions"": ""Press(behavior=2)"",
                     ""processors"": """",
                     ""groups"": """",

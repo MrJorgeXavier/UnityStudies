@@ -6,7 +6,9 @@ using UnityEngine.InputSystem;
 class SideMovementCommand: ComposedCommand<float, Vector2> {
     [SerializeField] public float Speed = 5f;
     public override bool Activated {
-        get {return input == 1 && modifierInput != Vector2.zero;}
+        get {
+            return isMoving && modifierInput != Vector2.zero;
+        }
     }
 
     private bool isMoving = false;
@@ -22,7 +24,7 @@ class SideMovementCommand: ComposedCommand<float, Vector2> {
     }
 
     public void PerformSideMovement(Transform self, float deltaTime) {
-        self.parent.position+=(self.right.normalized * modifierInput.x * Speed * deltaTime);
-        self.parent.position+=(self.up.normalized * modifierInput.y * Speed * deltaTime);
+        self.parent.position+=(-self.right.normalized * modifierInput.x * Speed * deltaTime);
+        self.parent.position+=(-self.up.normalized * modifierInput.y * Speed * deltaTime);
     }
 }

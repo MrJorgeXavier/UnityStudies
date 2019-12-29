@@ -19,8 +19,6 @@ class LookCommand: ComposedCommand<float, Vector2> {
 
     private void OnLookActionPerformed() {
         isLooking = input == 1;
-        if(isLooking) Cursor.lockState = CursorLockMode.Locked;
-        else Cursor.lockState = CursorLockMode.None;
     }
 
     public void PerformLook(Transform self, float deltaTime) {

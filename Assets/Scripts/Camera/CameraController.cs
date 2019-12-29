@@ -3,9 +3,9 @@ public class CameraController: MonoBehaviour {
     
     private InputManager input;
     [SerializeField] FocusCommand focusCommand = new FocusCommand();
-    private LookCommand lookCommand = new LookCommand();
+    [SerializeField] LookCommand lookCommand = new LookCommand();
     [SerializeField] OrbitCommand orbitCommand = new OrbitCommand();
-    private SideMovementCommand sideMovementCommand = new SideMovementCommand();
+    [SerializeField] SideMovementCommand sideMovementCommand = new SideMovementCommand();
     [SerializeField] ZoomCommand zoomCommand = new ZoomCommand();
 
     private Transform lastFocusedObject = null;

@@ -4,7 +4,7 @@ using UnityEngine.InputSystem;
 
 [Serializable]
 class FocusCommand: ComposedCommand<float, Vector2> {
-    [SerializeField] public Transform FocusedObject = null;
+    [NonSerialized] public Transform FocusedObject = null;
     [SerializeField] public float Speed = 10f;
     [SerializeField] public Vector2 Offset = new Vector2(2, 3);    
     [SerializeField] public bool KeepFocus = false;

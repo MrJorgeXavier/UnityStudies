@@ -25,18 +25,17 @@ public class CameraController: MonoBehaviour {
         // Debug.Log("isSideMoving: " + sideMovementCommand.IsActive);
         // Debug.Log("isLooking: " + lookCommand.IsActive);
         // Debug.Log("isZooming: " + zoomCommand.IsActive);
-        if(orbitCommand.Activated) {
-            orbitCommand.PerformOrbit(
-                transform,
-                getOrbitingPoint()
-            );
-        }
-        
         if(focusCommand.Activated) {
             lastFocusedObject = focusCommand.FocusedObject;
             focusCommand.PerformInterpolatedFocus(
                 transform,
-                lastFocusedObject.position
+                focusCommand.FocusedObject.position
+            );
+        } 
+        else if(orbitCommand.Activated) {
+            orbitCommand.PerformOrbit(
+                transform,
+                getOrbitingPoint()
             );
         }
 

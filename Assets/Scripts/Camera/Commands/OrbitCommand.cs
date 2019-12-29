@@ -11,7 +11,7 @@ class OrbitCommand: ComposedCommand<float, Vector2> {
         }
     }
 
-    public Vector3 OrbitingPoint = Vector3.zero;
+    [NonSerialized] public Vector3 OrbitingPoint = Vector3.zero;
 
     override public void ConfigureAction(InputAction action, InputAction modifier) {
         base.ConfigureAction(action, modifier);
@@ -24,15 +24,13 @@ class OrbitCommand: ComposedCommand<float, Vector2> {
             OrbitingPoint = Camera.main.transform.position + (Camera.main.transform.forward.normalized * 3.5f);
         } else {
             OrbitingPoint = Vector3.zero;
-        }
-        
-        if(Activated) Cursor.lockState = CursorLockMode.Locked;
-        else Cursor.lockState = CursorLockMode.None;
+        }    
     }
 
     public void PerformOrbit(Transform self, Vector3 target) {
         float speed = Speed * 10 * Time.fixedDeltaTime;
-        self.RotateAround(target, self.up, modifierInput.x * speed);
-        self.RotateAround(target, self.right, modifierInput.y * -speed);
+        self.RotateAround(target, Vector3.up, modifierInput.x * speed);
+        self.RotateAround(target, Vector3.right, modifierInput.y * speed);
+        self.LookAt(target);
     }
 }

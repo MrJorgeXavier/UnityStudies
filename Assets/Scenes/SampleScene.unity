@@ -319,7 +319,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
   m_LocalRotation: {x: 0.18838783, y: -0, z: -0, w: 0.9820947}
-  m_LocalPosition: {x: -2.01, y: 1.65, z: -3.3}
+  m_LocalPosition: {x: -0.34, y: 1.65, z: -3.3}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -338,9 +338,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   focusCommand:
-    FocusedObject: {fileID: 0}
-    TransitionSpeed: 10
+    Speed: 10
     Offset: {x: 2, y: 3}
+    KeepFocus: 0
+  orbitCommand:
+    Speed: 5
+    euler: {x: 0, y: 0, z: 0}
+    clampedEulerZ: 0
+    quartenion: {x: 0, y: 0, z: 0, w: 1}
 --- !u!1 &1208876505
 GameObject:
   m_ObjectHideFlags: 0

@@ -10,7 +10,7 @@ class ZoomCommand: Command<Vector2> {
         get {return input != Vector2.zero;}
     }
 
-    public void PerformZoom(Transform self) {
-        self.position += (self.forward.normalized * -Mathf.Sign(input.y) * Speed * Time.fixedDeltaTime);
+    public void PerformZoom(Transform self, float deltaTime) {
+        self.parent.position += (self.forward.normalized * -Mathf.Sign(input.y) * Speed * deltaTime);
     }
 }

@@ -21,26 +21,33 @@ public class CameraController: MonoBehaviour {
     }
 
     void FixedUpdate() {
-        // Debug.Log("Orbiting: " + orbitCommand.IsActive);
         // Debug.Log("isSideMoving: " + sideMovementCommand.IsActive);
         // Debug.Log("isLooking: " + lookCommand.IsActive);
-        // Debug.Log("isZooming: " + zoomCommand.IsActive);
         if(focusCommand.Activated) {
             lastFocusedObject = focusCommand.FocusedObject;
             focusCommand.PerformInterpolatedFocus(
                 transform,
-                focusCommand.FocusedObject.position
+                focusCommand.FocusedObject.position,
+                Time.fixedDeltaTime
             );
         } 
         else if(orbitCommand.Activated) {
             orbitCommand.PerformOrbit(
                 transform,
-                getOrbitingPoint()
+                getOrbitingPoint(),
+                Time.fixedDeltaTime
             );
         }
         else if(zoomCommand.Activated) {
             zoomCommand.PerformZoom(
-                transform
+                transform,
+                Time.fixedDeltaTime
+            );
+        }
+        else if(lookCommand.Activated) {
+            lookCommand.PerformLook(
+                transform,
+                Time.fixedDeltaTime
             );
         }
 

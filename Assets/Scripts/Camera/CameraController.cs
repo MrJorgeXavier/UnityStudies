@@ -50,6 +50,12 @@ public class CameraController: MonoBehaviour {
                 Time.fixedDeltaTime
             );
         }
+        else if(sideMovementCommand.Activated) {
+            sideMovementCommand.PerformSideMovement(
+                transform,
+                Time.fixedDeltaTime
+            );
+        }
 
     }
 

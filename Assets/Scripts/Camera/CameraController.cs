@@ -6,7 +6,7 @@ public class CameraController: MonoBehaviour {
     private LookCommand lookCommand = new LookCommand();
     [SerializeField] OrbitCommand orbitCommand = new OrbitCommand();
     private SideMovementCommand sideMovementCommand = new SideMovementCommand();
-    private ZoomCommand zoomCommand = new ZoomCommand();
+    [SerializeField] ZoomCommand zoomCommand = new ZoomCommand();
 
     private Transform lastFocusedObject = null;
 
@@ -36,6 +36,11 @@ public class CameraController: MonoBehaviour {
             orbitCommand.PerformOrbit(
                 transform,
                 getOrbitingPoint()
+            );
+        }
+        else if(zoomCommand.Activated) {
+            zoomCommand.PerformZoom(
+                transform
             );
         }
 

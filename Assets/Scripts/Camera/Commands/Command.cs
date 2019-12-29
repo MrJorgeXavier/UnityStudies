@@ -10,7 +10,7 @@ abstract class Command<T> where T: struct {
         get { return action.ReadValue<T>(); }
     }
 
-    public void ConfigureAction(InputAction action) {
+    public virtual void ConfigureAction(InputAction action) {
         this.action = action;
     }
 

@@ -343,9 +343,8 @@ MonoBehaviour:
     KeepFocus: 0
   orbitCommand:
     Speed: 5
-    euler: {x: 0, y: 0, z: 0}
-    clampedEulerZ: 0
-    quartenion: {x: 0, y: 0, z: 0, w: 1}
+  zoomCommand:
+    Speed: 20
 --- !u!1 &1208876505
 GameObject:
   m_ObjectHideFlags: 0

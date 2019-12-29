@@ -32,15 +32,18 @@ class FocusCommand: ComposedCommand<float, Vector2> {
 
     public void PerformInterpolatedFocus(Transform self, Vector3 target) {
         float speed = this.Speed * Time.fixedDeltaTime;
+        
         Quaternion oldRotation = self.rotation;
         Vector3 oldPosition = self.position;
-        Vector3 refVelocity = Vector3.zero;
+
         Vector3 offset = focusOffsetFrom(self, target);
         Vector3 newPosition = target + offset;
         Vector3 interpolatedPosition = Vector3.Lerp(self.position, newPosition, speed);
+        
         self.position = interpolatedPosition;
         self.LookAt(target);
         self.rotation = Quaternion.Lerp(oldRotation, self.rotation, speed);
+
         if(!KeepFocus 
             && oldRotation == self.rotation 
             && oldPosition == self.position) {

@@ -27,7 +27,7 @@ public class CameraController: MonoBehaviour {
             lastFocusedObject = focusCommand.FocusedObject;
             focusCommand.PerformInterpolatedFocus(
                 transform,
-                focusCommand.FocusedObject.position,
+                focusCommand.FocusedObject,
                 Time.fixedDeltaTime
             );
         } 

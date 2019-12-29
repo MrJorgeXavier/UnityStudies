@@ -253,7 +253,7 @@ GameObject:
   - component: {fileID: 721269677}
   - component: {fileID: 721269676}
   m_Layer: 0
-  m_Name: CameraController
+  m_Name: CameraSupport
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -418,7 +418,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   focusCommand:
     Speed: 10
-    Offset: {x: 2, y: 3}
+    Offset: 5
     KeepFocus: 0
   orbitCommand:
     Speed: 5

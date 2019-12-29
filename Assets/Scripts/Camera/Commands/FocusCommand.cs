@@ -6,7 +6,7 @@ using UnityEngine.InputSystem;
 class FocusCommand: ComposedCommand<float, Vector2> {
     [NonSerialized] public Transform FocusedObject = null;
     [SerializeField] public float Speed = 10f;
-    [SerializeField] public Vector2 Offset = new Vector2(2, 3);    
+    [SerializeField] public float Offset = 5;    
     [SerializeField] public bool KeepFocus = false;
 
     override public bool Activated {
@@ -30,14 +30,14 @@ class FocusCommand: ComposedCommand<float, Vector2> {
         }
     }
 
-    public void PerformInterpolatedFocus(Transform self, Vector3 target, float deltaTime) {
+    public void PerformInterpolatedFocus(Transform self, Transform target, float deltaTime) {
         float speed = this.Speed * deltaTime;
         
         Quaternion oldRotation = self.rotation;
         Vector3 oldPosition = self.position;
 
         Vector3 offset = focusOffsetFrom(self, target);
-        Vector3 newPosition = target + offset;
+        Vector3 newPosition = target.position + offset;
         Vector3 interpolatedPosition = Vector3.Lerp(self.position, newPosition, speed);
         
         self.parent.position = interpolatedPosition;
@@ -51,13 +51,7 @@ class FocusCommand: ComposedCommand<float, Vector2> {
         }
     }
 
-    private Vector3 focusOffsetFrom(Transform self, Vector3 target) {
-        float xDiference = Mathf.Abs(target.x) - Mathf.Abs(self.position.x);
-        float zDiference = Mathf.Abs(target.z) - Mathf.Abs(self.position.z);
-        if(xDiference > zDiference) {
-            return new Vector3(0, Offset.y, Offset.x);
-        } else {
-            return new Vector3(Offset.x, Offset.y, 0);
-        }
+    private Vector3 focusOffsetFrom(Transform self, Transform target) {
+        return (self.position - target.position).normalized * (target.localScale.magnitude / 2 + Offset);        
     }
 }

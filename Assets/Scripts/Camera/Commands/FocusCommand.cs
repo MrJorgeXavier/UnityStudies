@@ -3,11 +3,11 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 
 [Serializable]
-class FocusCommand: ComposedCommand<int, Vector2> {
-    public Transform FocusedObject = null;
-    [SerializeField] public float TransitionSpeed = 10f;
-    [SerializeField] public Vector2 Offset = new Vector2(2, 3);
-       
+class FocusCommand: ComposedCommand<float, Vector2> {
+    [SerializeField] public Transform FocusedObject = null;
+    [SerializeField] public float Speed = 10f;
+    [SerializeField] public Vector2 Offset = new Vector2(2, 3);    
+    [SerializeField] public bool KeepFocus = false;
 
     override public bool Activated {
         get { return FocusedObject != null;}
@@ -16,10 +16,10 @@ class FocusCommand: ComposedCommand<int, Vector2> {
     override public void ConfigureAction(InputAction action, InputAction modifier) {
         base.ConfigureAction(action, modifier);
         action.performed += _ => OnFocusActionPerformed();
-        Debug.Log("Configured!");
     }
 
     private void OnFocusActionPerformed() {
+        
         if (
             Physics.Raycast(Camera.main.ScreenPointToRay(new Vector3(modifierInput.x, modifierInput.y, 0)), out RaycastHit hit)
             && hit.transform != null
@@ -30,21 +30,27 @@ class FocusCommand: ComposedCommand<int, Vector2> {
         }
     }
 
-    public void PerformInterpolatedFocus(Transform self, Transform target) {
-        float speed = TransitionSpeed * Time.fixedDeltaTime;
+    public void PerformInterpolatedFocus(Transform self, Vector3 target) {
+        float speed = this.Speed * Time.fixedDeltaTime;
         Quaternion oldRotation = self.rotation;
+        Vector3 oldPosition = self.position;
         Vector3 refVelocity = Vector3.zero;
         Vector3 offset = focusOffsetFrom(self, target);
-        Vector3 newPosition = target.position + offset;
+        Vector3 newPosition = target + offset;
         Vector3 interpolatedPosition = Vector3.Lerp(self.position, newPosition, speed);
         self.position = interpolatedPosition;
         self.LookAt(target);
         self.rotation = Quaternion.Lerp(oldRotation, self.rotation, speed);
+        if(!KeepFocus 
+            && oldRotation == self.rotation 
+            && oldPosition == self.position) {
+            FocusedObject = null;
+        }
     }
 
-    private Vector3 focusOffsetFrom(Transform self, Transform target) {
-        float xDiference = Mathf.Abs(target.position.x) - Mathf.Abs(self.position.x);
-        float zDiference = Mathf.Abs(target.position.z) - Mathf.Abs(self.position.z);
+    private Vector3 focusOffsetFrom(Transform self, Vector3 target) {
+        float xDiference = Mathf.Abs(target.x) - Mathf.Abs(self.position.x);
+        float zDiference = Mathf.Abs(target.z) - Mathf.Abs(self.position.z);
         if(xDiference > zDiference) {
             return new Vector3(0, Offset.y, Offset.x);
         } else {

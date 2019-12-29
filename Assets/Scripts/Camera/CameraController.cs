@@ -4,9 +4,11 @@ public class CameraController: MonoBehaviour {
     private InputManager input;
     [SerializeField] FocusCommand focusCommand = new FocusCommand();
     private LookCommand lookCommand = new LookCommand();
-    private OrbitCommand orbitCommand = new OrbitCommand();
+    [SerializeField] OrbitCommand orbitCommand = new OrbitCommand();
     private SideMovementCommand sideMovementCommand = new SideMovementCommand();
     private ZoomCommand zoomCommand = new ZoomCommand();
+
+    private Transform lastFocusedObject = null;
 
     void Awake() {
         input = new InputManager();
@@ -23,7 +25,20 @@ public class CameraController: MonoBehaviour {
         // Debug.Log("isSideMoving: " + sideMovementCommand.IsActive);
         // Debug.Log("isLooking: " + lookCommand.IsActive);
         // Debug.Log("isZooming: " + zoomCommand.IsActive);
-        if(focusCommand.Activated) focusCommand.PerformInterpolatedFocus(transform, focusCommand.FocusedObject);
+        if(orbitCommand.Activated) {
+            orbitCommand.PerformOrbit(
+                transform,
+                getOrbitingPoint()
+            );
+        }
+        
+        if(focusCommand.Activated) {
+            lastFocusedObject = focusCommand.FocusedObject;
+            focusCommand.PerformInterpolatedFocus(
+                transform,
+                lastFocusedObject.position
+            );
+        }
 
     }
 
@@ -34,5 +49,10 @@ public class CameraController: MonoBehaviour {
 
     void OnDisable() {
         input.Camera.Disable();
+    }
+
+    private Vector3 getOrbitingPoint() {
+        if(lastFocusedObject != null) return lastFocusedObject.position;
+        else return orbitCommand.OrbitingPoint;
     }
 }

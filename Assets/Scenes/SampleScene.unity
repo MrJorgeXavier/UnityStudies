@@ -340,7 +340,7 @@ MonoBehaviour:
   focusCommand:
     FocusedObject: {fileID: 0}
     TransitionSpeed: 10
-    Offset: {x: 5, y: 10}
+    Offset: {x: 2, y: 3}
 --- !u!1 &1208876505
 GameObject:
   m_ObjectHideFlags: 0

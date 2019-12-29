@@ -113,7 +113,7 @@ public class @InputManager : IInputActionCollection, IDisposable
                     ""name"": """",
                     ""id"": ""fdb8d9f3-d60f-430e-b813-bd9157944c1d"",
                     ""path"": ""<Mouse>/middleButton"",
-                    ""interactions"": """",
+                    ""interactions"": ""Press(behavior=2)"",
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Orbit"",

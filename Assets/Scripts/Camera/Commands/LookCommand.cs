@@ -1,6 +1,8 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using System;
 
+[Serializable]
 class LookCommand: ComposedCommand<float, Vector2> {
     [SerializeField] public float Speed = 50f;
 

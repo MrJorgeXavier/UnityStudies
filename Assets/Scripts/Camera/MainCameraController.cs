@@ -21,8 +21,6 @@ public class MainCameraController: MonoBehaviour {
     }
 
     void FixedUpdate() {
-        // Debug.Log("isSideMoving: " + sideMovementCommand.IsActive);
-        // Debug.Log("isLooking: " + lookCommand.IsActive);
         if(focusCommand.Activated) {
             lastFocusedObject = focusCommand.FocusedObject;
             focusCommand.PerformInterpolatedFocus(

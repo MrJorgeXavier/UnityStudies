@@ -6,13 +6,11 @@ using UnityEngine.InputSystem;
 class OrbitCommand: ComposedCommand<float, Vector2> {
     [SerializeField] public float Speed = 5f;
     public override bool Activated {
-        get {
-            return OrbitingPoint != Vector3.zero;
-        }
+        get {return isOrbiting;}
     }
-
     [NonSerialized] public Vector3 OrbitingPoint = Vector3.zero;
-
+    private bool isOrbiting = false;
+    
     override public void ConfigureAction(InputAction action, InputAction modifier) {
         base.ConfigureAction(action, modifier);
         action.performed += _ => OnOrbitActionPerformed();
@@ -20,7 +18,8 @@ class OrbitCommand: ComposedCommand<float, Vector2> {
     }
 
     private void OnOrbitActionPerformed() {
-        if(input == 1 && OrbitingPoint == Vector3.zero) {
+        isOrbiting = input == 1;
+        if(isOrbiting && OrbitingPoint == Vector3.zero) {
             OrbitingPoint = Camera.main.transform.position + (Camera.main.transform.forward.normalized * 3.5f);
         } else {
             OrbitingPoint = Vector3.zero;

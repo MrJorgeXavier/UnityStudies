@@ -28,6 +28,7 @@ public class MainCameraController: MonoBehaviour {
                 focusCommand.FocusedObject,
                 Time.fixedDeltaTime
             );
+            return;
         } 
         else if(orbitCommand.Activated) {
             orbitCommand.PerformOrbit(
@@ -35,6 +36,7 @@ public class MainCameraController: MonoBehaviour {
                 getOrbitingPoint(),
                 Time.fixedDeltaTime
             );
+            return;
         }
         else if(zoomCommand.Activated) {
             zoomCommand.PerformZoom(
@@ -53,8 +55,11 @@ public class MainCameraController: MonoBehaviour {
                 transform,
                 Time.fixedDeltaTime
             );
+        } else {
+            return;
         }
 
+        lastFocusedObject = null; //Loses focus if necessarily do anything other than Orbit or Focus an object.
     }
 
 

@@ -10,15 +10,17 @@ public class AimCameraController: MonoBehaviour {
     }
 
     void Update() {
-        lookCommand.PerformLook(
-            transform,
-            Time.deltaTime
-        );
+        if(lookCommand.Activated) {
+            lookCommand.PerformLook(
+                transform,
+                Time.deltaTime
+            );
+        }
     }
 
     void OnEnable() {
         Debug.Log("ENABLED!");
-        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.lockState = CursorLockMode.Confined;
         input.Camera.Enable();
     }
 

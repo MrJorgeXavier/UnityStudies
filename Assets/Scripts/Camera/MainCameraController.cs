@@ -1,7 +1,10 @@
 using UnityEngine;
+using UnityEngine.EventSystems;
+
 public class MainCameraController: MonoBehaviour {
     
     private InputManager input;
+    [SerializeField] public EventSystem eventSystem;
     [SerializeField] FocusCommand focusCommand = new FocusCommand();
     [SerializeField] LookCommand lookCommand = new LookCommand();
     [SerializeField] OrbitCommand orbitCommand = new OrbitCommand();
@@ -21,6 +24,7 @@ public class MainCameraController: MonoBehaviour {
     }
 
     void FixedUpdate() {
+        if(eventSystem.currentSelectedGameObject != null) return;
         if(focusCommand.Activated) {
             lastFocusedObject = focusCommand.FocusedObject;
             focusCommand.PerformInterpolatedFocus(

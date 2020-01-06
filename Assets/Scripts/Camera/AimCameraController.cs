@@ -1,7 +1,9 @@
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class AimCameraController: MonoBehaviour {
     private InputManager input;
+    [SerializeField] public EventSystem eventSystem;
     [SerializeField] LookCommand lookCommand = new LookCommand();
 
     public Vector3 AimDirection() {
@@ -14,6 +16,7 @@ public class AimCameraController: MonoBehaviour {
     }
 
     void Update() {
+        if(eventSystem.currentSelectedGameObject != null) return;
         if(lookCommand.Activated) {
             lookCommand.PerformLook(
                 transform,

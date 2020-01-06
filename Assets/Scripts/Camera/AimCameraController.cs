@@ -4,6 +4,10 @@ public class AimCameraController: MonoBehaviour {
     private InputManager input;
     [SerializeField] LookCommand lookCommand = new LookCommand();
 
+    public Vector3 AimDirection() {
+        return transform.forward;
+    }
+
     void Awake() {
         input = new InputManager();
         lookCommand.ConfigureAction(input.Camera.Look, input.Camera.Delta);

@@ -1,12 +1,9 @@
 using UnityEngine;
 using UnityEngine.UI;
-using System;
 
-public class GameplayManager: MonoBehaviour {
-    [SerializeField] public ProjectileController projectileController;
+public class CameraManager: MonoBehaviour {
     [SerializeField] public MainCameraController mainCameraController;
     [SerializeField] public AimCameraController aimCameraController;
-
     [SerializeField] public Button aimButton;
 
     private bool isAiming = false;
@@ -15,7 +12,7 @@ public class GameplayManager: MonoBehaviour {
         aimButton.onClick.AddListener(onAimButtonClick);
     }
 
-    void onAimButtonClick() {
+    private void onAimButtonClick() {
         isAiming = !isAiming;
         if(isAiming) EnableAimMode();
         else EnableFreeVisionMode();

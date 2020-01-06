@@ -3,6 +3,7 @@ using UnityEngine;
 
 public abstract class BallisticForce {
     private WeakReference projectileController;
+    public virtual bool IsActive { get { return true; } }
 
     protected ProjectileController projectile {
         get {

@@ -5,7 +5,7 @@ using UnityEngine.InputSystem;
 [Serializable]
 class ZoomCommand: Command<Vector2> {
 
-    [SerializeField] public float Speed = 40f;
+    [SerializeField] public float Speed = 80f;
     public override bool Activated {
         get {return input != Vector2.zero;}
     }

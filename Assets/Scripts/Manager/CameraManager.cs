@@ -10,12 +10,14 @@ public class CameraManager: MonoBehaviour {
 
     void Start() {
         aimButton.onClick.AddListener(onAimButtonClick);
+        UpdateAimButtonText();
     }
 
     private void onAimButtonClick() {
         isAiming = !isAiming;
         if(isAiming) EnableAimMode();
         else EnableFreeVisionMode();
+        UpdateAimButtonText();
     }
 
     public void EnableAimMode() {
@@ -26,5 +28,11 @@ public class CameraManager: MonoBehaviour {
     public void EnableFreeVisionMode() {
         mainCameraController.gameObject.SetActive(true);
         aimCameraController.gameObject.SetActive(false);
+    }
+
+    private void UpdateAimButtonText() {
+        Text aimButtonText = aimButton.GetComponentInChildren<Text>();
+        if(isAiming) aimButtonText.text = "Voltar";
+        else aimButtonText.text = "Mirar";
     }
 }

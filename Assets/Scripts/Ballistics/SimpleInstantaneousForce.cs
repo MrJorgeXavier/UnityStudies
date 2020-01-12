@@ -5,7 +5,7 @@ public class SimpleInstantaneousForce: BallisticForce {
 
     override public bool IsActive { get { return this.force != Vector3.zero; } }
 
-    public SimpleInstantaneousForce(Vector3 force) {
+    public  SimpleInstantaneousForce(Vector3 force) {
         this.force = force;
     }
 
